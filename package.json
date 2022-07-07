@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dxf": "^4.6.3",
     "express": "^4.15.3",
     "gdal-async": "^3.5.0",
     "gdal-next": "^2.8.0"

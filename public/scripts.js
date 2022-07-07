@@ -5,7 +5,7 @@ var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeig
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.shadowMap.enabled = true;
-
+renderer.setClearColor(0x7e807f)
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.25;
@@ -27,17 +27,21 @@ var manager = new THREE.LoadingManager();
 manager.onLoad = init;
 
 var loader = new THREE.TextureLoader( manager );
-
+var con = loader.load('contour.png')
 loader.load( 'output.png', function( texture ) {
 	var geometry = new THREE.PlaneGeometry(10,10,100,100);
-	var material = new THREE.MeshStandardMaterial({map:texture,displacementMap:texture,displacementScale:2,displacementBias:0});
+	var material = new THREE.MeshStandardMaterial({color:0xffff,map:con,displacementMap:texture,displacementScale:2,displacementBias:0.01,opacity:0.1,transparent:true});
+	var material2 = new THREE.MeshStandardMaterial({color:0x00afce,map:texture,displacementMap:texture,displacementScale:2,displacementBias:0});
+	var material3 = new THREE.MeshStandardMaterial({color:0xffff,map:texture,displacementMap:texture,displacementScale:2,displacementBias:0.01,wireframe:true});
 	material.metalness = 0
 material.roughness = 0
 	// material.displacementMap = texture;
 	earthMesh = new THREE.Mesh(geometry, material);
-	earthMesh.castShadow = true; //default is false
-earthMesh.receiveShadow = true;
+	earthMesh2 = new THREE.Mesh(geometry, material2);
+	earthMesh3 = new THREE.Mesh(geometry, material3);
 	scene.add( earthMesh );
+	scene.add( earthMesh2 );
+	scene.add( earthMesh3 );
 });
 
 
